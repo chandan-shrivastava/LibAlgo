@@ -13,127 +13,128 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-    <main class="flex-shrink-0">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container px-5">
-                <a class="display-6 fw-bolder text-decoration-none text-danger " href="index.html">LibAlgo</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation"><span
-                        class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="text-primary nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-primary" id="navbarDropdownBlog" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">Algo_1</a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                <li><a class="dropdown-item text-primary" href="#!">Algo_1_1</a></li>
-                                <li><a class="dropdown-item text-primary" href="#!">Algo_1_2</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-primary" id="navbarDropdownBlog" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">Algo_2</a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                <li><a class="dropdown-item text-primary" href="#!">Algo_2_1</a></li>
-                                <li><a class="dropdown-item text-primary" href="#!">Algo_2_2</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+    <style>
+        .zoom {
+            transition: transform .3s;
+            /* Animation */
+        }
+
+        .zoom:hover {
+            transform: scale(1.2);
+            /* (150% zoom)*/
+        }
+    </style>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-5">
+            <a class="display-6 fw-bolder text-decoration-none text-danger " href="index.html">LibAlgo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="text-primary nav-link" href="index.html">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Header-->
+    <header class="bg-white py-3">
+        <div class="row gx-5 align-items-center justify-content-center">
+            <div class="col-lg-7 col-xxl-7">
+                <div class="my-5 text-center text-xl-start">
+                    <h1 class="display-5 fw-bolder text-dark mb-2">LibAlgo - Algorithm Specific Webpage
+                    </h1>
+                    <p class="lead fw-normal text-dark mb-4">Algorithm Library made in the course Algorithm Analysis
+                        and Design under Prof. Srinathan Kannan</p>
                 </div>
             </div>
-        </nav>
-        <!-- Header-->
-        <header class="bg-white py-3">
-            <div class="row gx-5 align-items-center justify-content-center">
-                <div class="col-lg-7 col-xxl-7">
-                    <div class="my-5 text-center text-xl-start">
-                        <h1 class="display-6 fw-bolder text-dark mb-2">LibAlgo - Algorithm Specific Webpage
-                        </h1>
-                        <p class="lead fw-normal text-dark mb-4">Algorithm Library made in the course Algorithm Analysis
-                            and Design under Prof. Srinathan Kannan</p>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- Blog preview section-->
-        <section class="">
-            <div class="container px-5 my-5">
-                <div class="row gx-5 justify-content-center">
-                    <div class="col-lg-8 col-xl-6">
-                        <div class="text-center">
-                            <h2 class="fw-bolder text-warning display-3">Algorithms</h2>
+        </div>
+    </header>
+    <!-- Blog preview section-->
+    <section class="">
+        <div class="container px-5 my-5">
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-8 col-xl-6">
+                    <div class="text-center">
+                        <h2 class="fw-bolder text-warning display-3">Algorithms</h2>
                         </br>
+                    </div>
+                </div>
+            </div>
+            <div class="row gx-5">
+                <div class="col-lg-4 mb-5">
+                    <div class="zoom card h-100 shadow border border-warning border-5">
+                        <div class="card-body p-4 ">
+                            <a class="text-decoration-none link-dark stretched-link" href="/html/Divnconq.html">
+                                <h5 class="card-title fw-bolder mb-3">Divide and Conqeur</h5>
+                            </a>
+                            <p class="card-text mb-0">Master Theorem, Merge Sort, Matrix Multiplication,
+                                Finding median, Polynomial Multiplication</p>
                         </div>
                     </div>
                 </div>
-                <div class="row gx-5">
-                    <div class="col-lg-4 mb-5">
-                        <div class="card h-100 shadow border-5">
-                            <div class="card-body p-4">
-                                <a class="text-decoration-none link-dark stretched-link" href="#!">
-                                    <h5 class="card-title mb-3">Algorithm Name</h5>
-                                </a>
-                                <p class="card-text mb-0">Some description of the algorithm</p>
-                            </div>
+                <div class="col-lg-4 mb-5">
+                    <div class="card zoom h-100 shadow border border-primary border-5">
+                        <div class="card-body p-4">
+                            <a class="text-decoration-none link-dark stretched-link" href="/html/Greedy.html">
+                                <h5 class="card-title fw-bolder mb-3">Greedy Algorithms</h5>
+                            </a>
+                            <p class="card-text mb-0">Minimum Spanning Tree, Kruskal Algo, Disjoint Set Implementation,
+                                Path Compression, Activity Selection, Huffman coding, Set Cover Problem</p>
                         </div>
                     </div>
-                    <div class="col-lg-4 mb-5">
-                        <div class="card h-100 shadow border-5">
-                            <div class="card-body p-4">
-                                <a class="text-decoration-none link-dark stretched-link" href="#!">
-                                    <h5 class="card-title mb-3">Algorithm Name</h5>
-                                </a>
-                                <p class="card-text mb-0">Some description of the algorithm</p>
-                            </div>
+                </div>
+                <div class="col-lg-4 mb-5">
+                    <div class="card zoom h-100 shadow border-5 border border-success">
+                        <div class="card-body p-4">
+                            <a class="text-decoration-none link-dark stretched-link" href="/html/Tractable.html">
+                                <h5 class="card-title fw-bolder mb-3">Tractable Problems</h5>
+                            </a>
+                            <p class="card-text mb-0">n<sup>th</sup> Fibonacci, Karatsuba Algorithm</p>
                         </div>
                     </div>
-                    <div class="col-lg-4 mb-5">
-                        <div class="card h-100 shadow border-5">
-                            <div class="card-body p-4">
-                                <a class="text-decoration-none link-dark stretched-link" href="#!">
-                                    <h5 class="card-title mb-3">Algorithm Name</h5>
-                                </a>
-                                <p class="card-text mb-0">Some description of the algorithm</p>
-                            </div>
+                </div>
+                <div class="col-lg-4 mb-5">
+                    <div class="card zoom h-100 shadow border-5 border border-danger">
+                        <div class="card-body p-4">
+                            <a class="text-decoration-none link-dark stretched-link" href="/html/Dp.html">
+                                <h5 class="card-title fw-bolder mb-3">Dynamic Programming</h5>
+                            </a>
+                            <p class="card-text mb-0">Shortest Path in DAG, Longest Increasing Subsequence, Edit
+                                Distance,
+                                Chain Matrix Multiplication, Knapsack with and without repetition, Shortest Reliable
+                                Path,
+                                Floyd Warshall Algorithm, Independent Set in Trees</p>
                         </div>
                     </div>
-                    <div class="col-lg-4 mb-5">
-                        <div class="card h-100 shadow border-5">
-                            <div class="card-body p-4">
-                                <a class="text-decoration-none link-dark stretched-link" href="#!">
-                                    <h5 class="card-title mb-3">Algorithm Name</h5>
-                                </a>
-                                <p class="card-text mb-0">Some description of the algorithm</p>
-                            </div>
+                </div>
+                <div class="col-lg-4 mb-5">
+                    <div class="card zoom h-100 shadow border-5 border border-dark">
+                        <div class="card-body p-4">
+                            <a class="text-decoration-none link-dark stretched-link" href="/html/NumTheory.html">
+                                <h5 class="card-title fw-bolder mb-3">Number Theory</h5>
+                            </a>
+                            <p class="card-text mb-0">Euclid's GCD Algorithm, Euclid's Extended Algorithm, Modular
+                                Division,
+                                Public Key Cryptography and RSA, Miller Rabin Randomised Primality Testing</p>
                         </div>
                     </div>
-                    <div class="col-lg-4 mb-5">
-                        <div class="card h-100 shadow border-5">
-                            <div class="card-body p-4">
-                                <a class="text-decoration-none link-dark stretched-link" href="#!">
-                                    <h5 class="card-title mb-3">Algorithm Name</h5>
-                                </a>
-                                <p class="card-text mb-0">Some description of the algorithm</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 mb-5">
-                        <div class="card h-100 shadow border-5">
-                            <div class="card-body p-4">
-                                <a class="text-decoration-none link-dark stretched-link" href="#!">
-                                    <h5 class="card-title mb-3">Algorithm Name</h5>
-                                </a>
-                                <p class="card-text mb-0">Some description of the algorithm</p>
-                            </div>
+                </div>
+                <div class="col-lg-4 mb-5">
+                    <div class="card zoom h-100 shadow border-5 border border-secondary">
+                        <div class="card-body p-4">
+                            <a class="text-decoration-none link-dark stretched-link" href="/html/churchturing.html">
+                                <h5 class="card-title fw-bolder mb-3">Church Turing Hypothesis</h5>
+                            </a>
+                            <p class="card-text mb-0">A function on the natural numbers can be calculated by an
+                                effective method if and only if it is computable by a Turing machine</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
     <!-- Footer-->
     <footer class="bg-light py-4 mt-auto">
         <div class="container px-5">
