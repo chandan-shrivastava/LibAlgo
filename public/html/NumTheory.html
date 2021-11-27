@@ -34,7 +34,8 @@
                 <div class="my-6 text-center text-l-start">
                     <h1 class="display-2 fw-bolder text-dark mb-3">Number Theory
                     </h1>
-                    <p class="lead fw-normal text-dark mb-4">Algorithms included: Euclid's GCD Algorithm, Euclid's Extended Algorithm, Modular Division, 
+                    <p class="lead fw-normal text-dark mb-4">Algorithms included: Euclid's GCD Algorithm, Euclid's
+                        Extended Algorithm, Modular Division,
                         Public Key Cryptography and RSA, Miller Rabin Randomised Primality Testing</p>
                 </div>
             </div>
@@ -46,7 +47,21 @@
             <div class="col-sm">
                 <h1>1. Euclid's GCD Algorithm</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    GCD of two numbers is the largest number that divides both of them. A simple way to find GCD is to
+                    factorize both numbers and multiply common prime factors. The basic Euclidean GCD Algorithm is as
+                    follows:</p>
+                <ul>
+                    <li>If we subtract a smaller number from a larger (we reduce a larger number), GCD doesn’t change.
+                        So if we keep subtracting repeatedly the larger of two, we end up with GCD.</li>
+                    <li>Now instead of subtraction, if we divide the smaller number, the algorithm stops when we find
+                        remainder 0.</li>
+                </ul>
+                <pre><code class="language-py">
+def gcd(a, b): 
+if a == 0 :
+    return b 
+return gcd(b%a, a)
+</code></pre>
             </div>
         </div>
     </div>
@@ -57,7 +72,25 @@
             <div class="col-sm">
                 <h1>2. Euclid's Extended Algorithm</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    Extended Euclidean algorithm also finds integer coefficients x and y such that ax + by = gcd(a, b).
+                    The extended Euclidean algorithm updates results of gcd(a, b) using the results calculated by
+                    recursive call gcd(b%a, a). The extended Euclidean algorithm is particularly useful when a and b are
+                    coprime (or gcd is 1). Since x is the modular multiplicative inverse of “a modulo b”, and y is the
+                    modular multiplicative inverse of “b modulo a”. In particular, the computation of the modular
+                    multiplicative inverse is an essential step in RSA public-key encryption method.
+                </p>
+                <pre><code class="language-py">
+def gcdExtended(a, b): 
+# Base Case 
+if a == 0 :  
+    return b, 0, 1
+gcd, x1, y1 = gcdExtended(b%a, a) 
+# Update x and y using results of recursive 
+# call 
+x = y1 - (b//a) * x1 
+y = x1 
+return gcd
+</code></pre>
             </div>
         </div>
     </div>
@@ -67,7 +100,40 @@
             <div class="col-sm">
                 <h1>3. Modular Division</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    In Modular Division we are Given three positive numbers a, b and m. Compute a/b under modulo m. The
+                    task is basically to find a number c such that (b * c) % m = a % m. Modular division is defined when
+                    modular inverse of the divisor exists. The inverse of an integer ‘x’ is another integer ‘y’ such
+                    that (x*y) % m = 1 where m is the modulus. Inverse of a number ‘a’ exists under modulo ‘m’ if ‘a’
+                    and ‘m’ are co-prime, i.e., GCD of them is 1. The algorithm to compute a/b under modulo m is as
+                    follows:</p>
+                <ul>
+                    <li>If inverse doesn't exists (GCD of b and m is not 1), print "Division not defined"</li>
+                    <li>Else return "(inverse * a) % m" </li>
+                </ul>
+                <pre><code class="language-py">
+import math
+
+# Function to find modulo inverse of b. It returns
+# -1 when inverse doesn't
+# modInverse works for prime m
+def modInverse(b,m):
+    g = math.gcd(b, m)
+    if (g != 1):
+        # print("Inverse doesn't exist")
+        return -1
+    else:
+        # If b and m are relatively prime,
+        # then modulo inverse is b^(m-2) mode m
+        return pow(b, m - 2, m)
+# Function to compute a/b under modulo m
+def modDivide(a,b,m):
+    a = a % m
+    inv = modInverse(b,m)
+    if(inv == -1):
+        print("Division not defined")
+    else:
+        print("Result of Division is ",(inv*a) % m)
+</code></pre>
             </div>
         </div>
     </div>
@@ -75,19 +141,11 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>4. Public Key Cryptography and RSA</h1>
+                <h1>4. Miller Rabin Randomised Primality Testing</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <h1>5. Miller Rabin Randomised Primality Testing</h1>
-                <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    Miller Rabin Primality Test is a probabilistic algorithm to test whether a given number is prime or
+                    not. This website has really good explanation of the method: <a style="text-decoration: none;" href="https://www.geeksforgeeks.org/primality-test-set-3-miller-rabin/">Miller–Rabin Primality Test</a></p>
+                </p>
             </div>
         </div>
     </div>

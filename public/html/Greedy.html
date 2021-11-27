@@ -44,9 +44,60 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>1. Minimum Spanning Tree</h1>
+                <h1>1. Prim Algorithm</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    A minimum spanning tree is a spanning tree in which the sum of the weight of the edges is as minimum as possible.
+                    If we have a linked undirected graph with a weight (or cost) combine with each edge. Then the cost of spanning tree would be the sum of the cost of its edges. Prim's algorithm is a minimum spanning tree algorithm that takes a graph as input and finds the subset of the edges of that graph which form a tree that includes every vertex and has the minimum sum of weights among all the trees that can be formed from the graph. We start from one vertex and keep adding edges with the lowest weight until we reach our goal. Algorithm of the minimum spanning tree is as follows:
+                    <ul class="lead fw-normal text-dark mb-4">
+                        <li>Initialize the minimum spanning tree with a vertex chosen at random.</li>
+                        <li>Find all the edges that connect the tree to new vertices, find the minimum and add it to the tree</li>
+                        <li>Keep repeating step 2 until we get a minimum spanning tree</li>
+                    </ul>
+</p>
+<pre><code class="language-py">
+INF = 9999999
+# number of vertices in graph
+V = 5
+# create a 2d array of size 5x5
+# for adjacency matrix to represent graph
+G = [[0, 9, 75, 0, 0],
+     [9, 0, 95, 19, 42],
+     [75, 95, 0, 51, 66],
+     [0, 19, 51, 0, 31],
+     [0, 42, 66, 31, 0]]
+# create a array to track selected vertex
+# selected will become true otherwise false
+selected = [0, 0, 0, 0, 0]
+# set number of edge to 0
+no_edge = 0
+# the number of egde in minimum spanning tree will be
+# always less than(V - 1), where V is number of vertices in
+# graph
+# choose 0th vertex and make it true
+selected[0] = True
+# print for edge and weight
+print("Edge : Weight\n")
+while (no_edge < V - 1):
+    # For every vertex in the set S, find the all adjacent vertices
+    #, calculate the distance from the vertex selected at step 1.
+    # if the vertex is already in the set S, discard it otherwise
+    # choose another vertex nearest to selected vertex  at step 1.
+    minimum = INF
+    x = 0
+    y = 0
+    for i in range(V):
+        if selected[i]:
+            for j in range(V):
+                if ((not selected[j]) and G[i][j]):  
+                    # not in selected and there is an edge
+                    if minimum > G[i][j]:
+                        minimum = G[i][j]
+                        x = i
+                        y = j
+    print(str(x) + "-" + str(y) + ":" + str(G[x][y]))
+    selected[y] = True
+    no_edge += 1
+</code></pre>
             </div>
         </div>
     </div>
@@ -57,17 +108,84 @@
             <div class="col-sm">
                 <h1>2. Kruskal Algorithm</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <h1>3. Disjoint Set Implementation</h1>
+                    Kruskal's algorithm is another popular minimum spanning tree algorithm that uses a different logic to find the MST of a graph. Instead of starting from a vertex, Kruskal's algorithm sorts all the edges from low weight to high and keeps adding the lowest edges, ignoring those edges that create a cycle. We start from the edges with the lowest weight and keep adding edges until we reach our goal. Algorithm of the minimum spanning tree is as follows:
+                    <ul class="lead fw-normal text-dark mb-4">
+                        <li>Sort all the edges from low weight to high</li>
+                        <li>Take the edge with the lowest weight and add it to the spanning tree. If adding the edge created a cycle, then reject this edge.</li>
+                        <li>Keep adding edges until we reach all vertices</li>
+                    </ul>
+                </p>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    Any minimum spanning tree algorithm revolves around checking if adding an edge creates a loop or not. The most common way to find this out is an algorithm called Union FInd. The Union-Find algorithm divides the vertices into clusters and allows us to check if two vertices belong to the same cluster or not and hence decide whether adding an edge creates a cycle.
+                </p>
+<pre><code class="language-py">
+class Graph:
+    def __init__(self, vertices):
+        self.V = vertices
+        self.graph = []
+
+    def add_edge(self, u, v, w):
+        self.graph.append([u, v, w])
+
+    # Search function
+
+    def find(self, parent, i):
+        if parent[i] == i:
+            return i
+        return self.find(parent, parent[i])
+
+    def apply_union(self, parent, rank, x, y):
+        xroot = self.find(parent, x)
+        yroot = self.find(parent, y)
+        if rank[xroot] < rank[yroot]:
+            parent[xroot] = yroot
+        elif rank[xroot] > rank[yroot]:
+            parent[yroot] = xroot
+        else:
+            parent[yroot] = xroot
+            rank[xroot] += 1
+
+    #  Applying Kruskal algorithm
+    def kruskal_algo(self):
+        result = []
+        i, e = 0, 0
+        self.graph = sorted(self.graph, key=lambda item: item[2])
+        parent = []
+        rank = []
+        for node in range(self.V):
+            parent.append(node)
+            rank.append(0)
+        while e < self.V - 1:
+            u, v, w = self.graph[i]
+            i = i + 1
+            x = self.find(parent, u)
+            y = self.find(parent, v)
+            if x != y:
+                e = e + 1
+                result.append([u, v, w])
+                self.apply_union(parent, rank, x, y)
+        for u, v, weight in result:
+            print("%d - %d: %d" % (u, v, weight))
+
+
+g = Graph(6)
+g.add_edge(0, 1, 4)
+g.add_edge(0, 2, 4)
+g.add_edge(1, 2, 2)
+g.add_edge(1, 0, 4)
+g.add_edge(2, 0, 4)
+g.add_edge(2, 1, 2)
+g.add_edge(2, 3, 3)
+g.add_edge(2, 5, 2)
+g.add_edge(2, 4, 4)
+g.add_edge(3, 2, 3)
+g.add_edge(3, 4, 3)
+g.add_edge(4, 2, 4)
+g.add_edge(4, 3, 3)
+g.add_edge(5, 2, 2)
+g.add_edge(5, 4, 3)
+g.kruskal_algo()
+</code></pre>
             </div>
         </div>
     </div>
@@ -77,7 +195,13 @@
             <div class="col-sm">
                 <h1>4. Path Compression</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    Path compression` is a way of flattening the structure of the tree whenever Find is used on it. Since each element visited on the way to a root is part of the same set, all of these visited elements can be reattached directly to the root. The resulting tree is much flatter, speeding up future operations not only on these elements, but also on those referencing them.</p>
+<pre><code class="language-plaintext">
+function Find(x)
+if x.parent != x
+  x.parent := Find(x.parent)
+return x.parent                  
+</code></pre>
             </div>
         </div>
     </div>
@@ -85,27 +209,86 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>5. Activity Selection</h1>
+                <h1>5. Huffman coding</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    Huffman Coding is a technique of compressing data to reduce its size without losing any of the details. It is generally useful to compress the data in which there are frequently occurring characters. Huffman coding first creates a tree using the frequencies of the character and then generates code for each character. Once the data is encoded, it has to be decoded. Decoding is done using the same tree. Algorithm for Huffman coding is as follows:</p>
+                    <ul class="lead fw-normal text-dark mb-4">
+                        <li>Calculate the frequency of each character in the string.</li>
+                        <li>Sort the characters in increasing order of the frequency. These are stored in a priority queue Q.</li>
+                        <li>Make each unique character as a leaf node.</li>
+                        <li>Create an empty node z. Assign the minimum frequency to the left child of z and assign the second minimum frequency to the right child of z. Set the value of the z as the sum of the above two minimum frequencies.</li>
+                        <li>Remove these two minimum frequencies from Q and add the sum into the list of frequencies.</li>
+                        <li>Insert node z into the tree.</li>
+                        <li>Repeat steps 3 to 5 for all the characters.</li>
+                        <li>For each non-leaf node, assign 0 to the left edge and 1 to the right edge.</li>
+                    </ul>
+<pre><code class="language-py">
+string = 'BCAADDDCCACACAC'
+class NodeTree(object):
+
+    def __init__(self, left=None, right=None):
+        self.left = left
+        self.right = right
+
+    def children(self):
+        return (self.left, self.right)
+
+    def nodes(self):
+        return (self.left, self.right)
+
+    def __str__(self):
+        return '%s_%s' % (self.left, self.right)
+
+
+# Main function implementing huffman coding
+def huffman_code_tree(node, left=True, binString=''):
+    if type(node) is str:
+        return {node: binString}
+    (l, r) = node.children()
+    d = dict()
+    d.update(huffman_code_tree(l, True, binString + '0'))
+    d.update(huffman_code_tree(r, False, binString + '1'))
+    return d
+
+
+# Calculating frequency
+freq = {}
+for c in string:
+    if c in freq:
+        freq[c] += 1
+    else:
+        freq[c] = 1
+
+freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
+
+nodes = freq
+
+while len(nodes) > 1:
+    (key1, c1) = nodes[-1]
+    (key2, c2) = nodes[-2]
+    nodes = nodes[:-2]
+    node = NodeTree(key1, key2)
+    nodes.append((node, c1 + c2))
+
+    nodes = sorted(nodes, key=lambda x: x[1], reverse=True)
+
+huffmanCode = huffman_code_tree(nodes[0][0])
+
+print(' Char | Huffman code ')
+print('----------------------')
+for (char, frequency) in freq:
+    print(' %-4r |%12s' % (char, huffmanCode[char]))                 
+</code></pre>
             </div>
         </div>
     </div>
+    <br>
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>6. Huffman coding</h1>
+                <h1>6. Set Cover Problem</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <h1>7. Set Cover Problem</h1>
-                <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    In the set cover problem we have the input as a set of elements B where sets S<sub>1</sub>,....,S<sub>m</sub> ⊆ B. The ouput that we have to get is a selection of the S<sub>i</sub> whose union is B and the cost should be the number of sets picked. Here, we took an example where we had a set of letters as follows: {arid, dash, drain, heard, lost, nose, shun, slate, snare, thread, lid, roast} and we had to cover a set B which included {a,d,e,h,i,l,n,o,r,s,t,u}. The first approach we discussed was to pick the element in set S<sub>i</sub> with the largest number of uncovered elements and repeat this step until all elements of B are covered. So, First we pick thread which covers {t,h,r,e,a,d,s}. So, We are left with {i,l,n,o,s,u}. Next we picked lost which covers {l,o,s}. So, We are now left with {i,n,u}. Next we pick drain which covers {i,n}. Now we are only left with {u}. So, At last we will pick shun which covers the last remaining letter {u}. So, Now as we have covered all the letters, Is this approach optimum? We thought of another approach of picking the elements where we observed that for {u} we will have to pick shun. So, The uncovered elements are {a,d,e,i,l,o,r,t}. So, We need atleast three more picks since {e} and {i} aren't together and if we pick arid/drain/lead for covering {i} still we require two more picks to cover all elements.</p>
             </div>
         </div>
     </div>

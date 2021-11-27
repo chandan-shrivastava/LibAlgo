@@ -34,7 +34,7 @@
                 <div class="my-6 text-center text-l-start">
                     <h1 class="display-2 fw-bolder text-dark mb-3">Divide and Conqeur Algorithms
                     </h1>
-                    <p class="lead fw-normal text-dark mb-4">Algorithms included: Master Theorem, Merge Sort, Matrix
+                    <p class="lead fw-normal text-dark mb-4">Algorithms included: Merge Sort, Matrix
                         Multiplication, Finding median, Polynomial Multiplication</p>
                 </div>
             </div>
@@ -46,18 +46,91 @@
             <div class="col-sm">
                 <h1>1. Master Theorem</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    There are mainly three ways for solving recurrences. One of them is Master Method. Master Method is a direct way to get the solution. The master method works only for following type of recurrences or for recurrences that can be transformed to type: <br></p>
+                    <pre><code class="language-plaintext">T(n) = aT(n/b) + f(n) where a >= 1 and b > 1 <br>
+where,<br>
+n = size of input<br>
+a = number of subproblems in the recursion<br>
+n/b = size of each subproblem. All subproblems are assumed to have the same size.<br>
+f(n) = cost of the work done outside the recursive call, which includes the cost of dividing the problem and cost of merging the solutions<br></code></pre>
+<p class="lead fw-normal text-dark mb-4">
+There are following three cases: 
+<ul class="lead fw-normal text-dark mb-4">
+<li>If f(n) = O(n<sup>c</sup>) where c < Log<sub>b</sub>a then T(n) = Θ(n<sup>Log<sup>b</sup>a</sup>) </li>
+<li>If f(n) = Θ(n<sup>c</sup>) where c = Log<sub>b</sub>a then T(n) = Θ(n<sup>c</sup>Log n) </li>
+<li>If f(n) = Ω(n<sup>c</sup>) where c > Log<sub>b</sub>a then T(n) = Θ(f(n)</li>
+</ul>    
+</p>
+<p class="lead fw-normal text-dark mb-4">
+Example:<br>
+<ul class="lead fw-normal text-dark mb-4">
+<li>Merge Sort: T(n) = 2T(n/2) + Θ(n). It falls in case 2 as c is 1 and Log<sub>b</sub>a is also 1. So the solution is Θ(n Logn) </li>
+<li>Binary Search: T(n) = T(n/2) + Θ(1). It also falls in case 2 as c is 0 and Log<sub>b</sub>a is also 0. So the solution is Θ(Logn)</li>
+<li>T(n) = 3T(n/2) + n2. Here, a = 3, n/b = n/2, f(n) = n<sup>2</sup>, logb a = log<sub>2</sub>3 ≈ 1.58 < 2, ie. f(n) < n<sup>logb a+ϵ</sup>, where, ϵ is a constant. Case 3 implies here. Thus, T(n) = f(n) = Θ(n<sup>2</sup>). </li>
+</ul>
+</p>
             </div>
         </div>
     </div>
-    <br>
     <br>
     <div class="container">
         <div class="row">
             <div class="col-sm">
                 <h1>2. Merge Sort</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    Merge Sort is one of the most popular sorting algorithms that is based on the principle of Divide
+                    and Conquer Algorithm. Using the Divide and Conquer technique, we divide a problem into subproblems.
+                    When the solution to each subproblem is ready, we combine the results from the subproblems to solve
+                    the main problem. The merge sort algorithm recursively divides the array into halves until we reach
+                    the base case of array with 1 element. After that, the merge function picks up the sorted sub-arrays
+                    and merges them to gradually sort the entire array.</p>
+                <p class="lead fw-normal text-dark mb-1">
+                    Algorithm goes as follows:
+                </p>
+                <ul class="lead fw-normal text-dark mb-4">
+                    <li>Divide the array into two halves</li>
+                    <li>Sort the first half</li>
+                    <li>Sort the second half</li>
+                    <li>Merge the two halves</li>
+                </ul>
+                <pre><code class="language-py">
+def mergeSort(array):
+    if len(array) > 1:
+
+        #  r is the point where the array is divided into two subarrays
+        r = len(array)//2
+        L = array[:r]
+        M = array[r:]
+
+        # Sort the two halves
+        mergeSort(L)
+        mergeSort(M)
+
+        i = j = k = 0
+
+        # Until we reach either end of either L or M, pick larger among
+        # elements L and M and place them in the correct position at A[p..r]
+        while i < len(L) and j < len(M):
+            if L[i] < M[j]:
+                array[k] = L[i]
+                i += 1
+            else:
+                array[k] = M[j]
+                j += 1
+            k += 1
+
+        # When we run out of elements in either L or M,
+        # pick up the remaining elements and put in A[p..r]
+        while i < len(L):
+            array[k] = L[i]
+            i += 1
+            k += 1
+
+        while j < len(M):
+            array[k] = M[j]
+            j += 1
+            k += 1
+</code></pre>
             </div>
         </div>
     </div>
@@ -65,9 +138,86 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>3. Matrix Multiplication</h1>
+                <h1>3. Strassen's Matrix Multiplication</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    Strassen’s Matrix multiplication can be performed only on square matrices where n is a power of 2.
+                    Order of both of the matrices are n × n. This happens by decreasing the total number if
+                    multiplication performed at the expenses of a slight increase in the number of addition. Strassen
+                    algorithm is a recursive method for matrix multiplication where we divide the matrix into 4
+                    sub-matrices of dimensions n/2 x n/2 in each recursive step. Better way of explanation of this is
+                    given <a class="lead fw-normal text-dark mb-4" style="text-decoration: none;"
+                        href="https://www.geeksforgeeks.org/easy-way-remember-strassens-matrix-equation/"><i>here.</i></a>
+                </p>
+                <p class="lead fw-normal text-dark mb-1">
+                    In Strassen’s matrix multiplication there are seven multiplication and four addition, subtraction in
+                    total. They are:
+                </p>
+                <p class="lead fw-normal text-dark mb-1">
+                <ul>
+                    <li>D<sub>1</sub> = (a<sub>11</sub> + <sub>a22</sub>) (b<sub>11</sub> + b<sub>22</sub>)</li>
+                    <li>D<sub>2</sub> = (a<sub>21</sub> + <sub>a22</sub>).b<sub>11</sub></li>
+                    <li>D<sub>3</sub> = (b<sub>12</sub> – <sub>b22</sub>).a<sub>11</sub></li>
+                    <li>D<sub>4</sub> = (b<sub>21</sub> – <sub>b11</sub>).a<sub>22</sub></li>
+                    <li>D<sub>5</sub> = (a<sub>11</sub> + <sub>a12</sub>).b<sub>22</sub></li>
+                    <li>D<sub>6</sub> = (a<sub>21</sub> – <sub>a11</sub>) . (b<sub>11</sub> + b<sub>12</sub>)</li>
+                    <li>D<sub>7</sub> = (a<sub>12</sub> – <sub>a22</sub>) . (b<sub>21</sub> + b<sub>22</sub>)</li>
+                    <br>
+                    <li>C<sub>11</sub> = d<sub>1</sub> + d<sub>4</sub> – d<sub>5</sub> + d<sub>7</sub></li>
+                    <li>C<sub>12</sub> = d<sub>3</sub> + d<sub>5</sub></li>
+                    <li>C<sub>21</sub> = d<sub>2</sub> + d<sub>4</sub></li>
+                    <li>C<sub>22</sub> = d<sub>1</sub> + d<sub>3</sub> – d<sub>2</sub> – d<sub>6</sub></li>
+                    </li>
+                    </p>
+                    <pre><code class="language-py">
+import numpy as np
+
+def split(matrix):
+    """
+    Splits a given matrix into quarters.
+    Input: nxn matrix
+    Output: tuple containing 4 n/2 x n/2 matrices corresponding to a, b, c, d
+    """
+    row, col = matrix.shape
+    row2, col2 = row//2, col//2
+    return matrix[:row2, :col2], matrix[:row2, col2:], matrix[row2:, :col2], matrix[row2:, col2:]
+
+def strassen(x, y):
+    """
+    Computes matrix product by divide and conquer approach, recursively.
+    Input: nxn matrices x and y
+    Output: nxn matrix, product of x and y
+    """
+
+    # Base case when size of matrices is 1x1
+    if len(x) == 1:
+        return x * y
+
+    # Splitting the matrices into quadrants. This will be done recursively
+    # until the base case is reached.
+    a, b, c, d = split(x)
+    e, f, g, h = split(y)
+
+    # Computing the 7 products, recursively (p1, p2...p7)
+    p1 = strassen(a, f - h)
+    p2 = strassen(a + b, h)	
+    p3 = strassen(c + d, e)	
+    p4 = strassen(d, g - e)	
+    p5 = strassen(a + d, e + h)	
+    p6 = strassen(b - d, g + h)
+    p7 = strassen(a - c, e + f)
+
+    # Computing the values of the 4 quadrants of the final matrix c
+    c11 = p5 + p4 - p2 + p6
+    c12 = p1 + p2		
+    c21 = p3 + p4		
+    c22 = p1 + p5 - p3 - p7
+
+    # Combining the 4 quadrants into a single matrix by stacking horizontally and vertically.
+    c = np.vstack((np.hstack((c11, c12)), np.hstack((c21, c22))))
+
+    return c
+
+</code></pre>
             </div>
         </div>
     </div>
@@ -75,9 +225,74 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>4. Finding Median</h1>
+                <h1>4. Median of Medians</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    The median-of-medians algorithm is a deterministic linear-time selection algorithm. The algorithm
+                    works by dividing a list into sublists and then determines the approximate median in each of the
+                    sublists. Then, it takes those medians and puts them into a list and finds the median of that list.
+                    It uses that median value as a pivot and compares other elements of the list against the pivot. If
+                    an element is less than the pivot value, the element is placed to the left of the pivot, and if the
+                    element has a value greater than the pivot, it is placed to the right. The algorithm recurses on the
+                    list, honing in on the value it is looking for.</p>
+                <p class="lead fw-normal text-dark mb-4">
+                    The algorithm takes in a list and an index which is median-of-medians(A, i). Assume that all
+                    elements of A
+                    are distinct (though the algorithm can be further generalized to allow for duplicate elements).
+                </p>
+                <ul class="lead fw-normal text-dark mb-4">
+                    <li>Divide the list into sublists each of length five (if there are fewer than five elements
+                        available for the last list, that is fine).</li>
+                    <li>Sort each sublist and determine the median. Sorting very small lists takes linear time since
+                        these sublists have five elements, and this takes O(n) time. In the algorithm described on
+                        this page, if the list has an even number of elements, take the floor of the length of the list
+                        divided by 2 to find the index of the median.</li>
+                    <li>Use the median-of-median algorithm to recursively determine the median of the set of all the
+                        medians.</li>
+                    <li>Use this median as the pivot element, x. The pivot is an approximate median of the whole list
+                        and then each recursive step hones in on the true median.</li>
+                    <li>Reorder A such that all elements less than x are to the left of x, and all elements of A
+                        that are greater than x are to the right. This is called partitioning. The elements are in no
+                        particular order once they are placed on either side of x. For example, if x is 5, the list
+                        to the right of x maybe look like [8,7,12,6] (i.e. not in sorted order). This takes
+                        linear time since O(n) comparisons occur—each element in A is compared against x only.
+                    </li>
+                    <li>Let k be the rank of x, meaning, for a set of numbers S, x is the k<sup>th</sup> smallest number
+                        in S.</li>
+                    <li>
+                    <li>
+                        If i = k, then return x.
+                    </li>
+                    <li>
+                        If i &lt; ki &lt; k, then recurse using median-of-medians on (A[1,....,k-1], i).
+                    </li>
+                    <li>
+                        If i &gt; ki &gt; k, recurse using the median-of-medians algorithm on (A[k+1,...., i ], i-k).
+                    </li>
+                    </li>
+                </ul>
+                <pre><code class="language-py">def median_of_medians(A, i):
+
+    #divide A into sublists of len 5
+    sublists = [A[j:j+5] for j in range(0, len(A), 5)]
+    medians = [sorted(sublist)[len(sublist)/2] for sublist in sublists]
+    if len(medians) &lt;= 5:
+        pivot = sorted(medians)[len(medians)/2]
+    else:
+        #the pivot is the median of the medians
+        pivot = median_of_medians(medians, len(medians)/2)
+
+    #partitioning step
+    low = [j for j in A if j &lt; pivot]
+    high = [j for j in A if j > pivot]
+
+    k = len(low)
+    if i &lt; k:
+        return median_of_medians(low,i)
+    elif i > k:
+        return median_of_medians(high,i-k-1)
+    else: #pivot = k
+        return pivot
+</code></pre>
             </div>
         </div>
     </div>
@@ -85,9 +300,47 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>5. Polynomial Multiplication</h1>
+                <h1>5. Fast Fourier Transform</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    The Fast Fourier Transform is used for polynomial multiplication. The time to multiply two
+                    polynomials of degree-bound n in point-value form is Θ(n).The inverse of evaluation determining the
+                    coefficient form of a polynomial from a point-value representation is called interpolation.</p>
+                <p class="lead fw-normal text-dark mb-4">Overview of the FFT Algorithm is as follows:
+                    <br>Let m = 2n-1. [so degree of C is less than m]
+                </p>
+                <ul class="lead fw-normal text-dark mb-4">
+                    <li>Pick m points x<sub>0</sub>, x<sub>1</sub>, ..., x<sub>m-1</sub> chosen cleverly.</li>
+                    <li>Evaluate A at each of the points: A(x<sub>0</sub>),..., A(x<sub>m-1</sub>).</li>
+                    <li>Same for B.</li>
+                    <li>Now compute C(x<sub>0</sub>),..., C(x<sub>m-1</sub>), where C is A(x)*B(x)</li>
+                    <li>Interpolate to get the coefficients of C.</li>
+                </ul>
+                <p class="lead fw-normal text-dark mb-4">
+                    Pseudocode of the algorithm is as follows:
+                </p>
+                <pre><code class="language-plaintext">
+Recursive_FFT(a){
+    n = length(a) // a is the input coefficient vector
+    if n = 1
+      then return a
+    // wn is principle complex nth root of unity.
+    wn = e^(2*pi*i/n)
+    w = 1
+    // even indexed coefficients
+    A0 = (a0, a2, ..., an-2 )
+    // odd indexed coefficients
+    A1 = (a1, a3, ..., an-1 ) 
+    y0 = Recursive_FFT(A0) // local array
+    y1 = Recursive-FFT(A1) // local array
+    for k = 0 to n/2 - 1
+      // y array stores values of the DFT 
+      // of given polynomial. 
+      do y[k] = y0[k] + w*y1[k]  
+         y[k+(n/2)] = y0[k] - w*y1[k]
+         w = w*wn
+    return y
+}
+</code></pre>
             </div>
         </div>
     </div>
@@ -110,6 +363,9 @@
     </footer>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
     <!-- Core theme JS-->
     <script src="../js/scripts.js"></script>
 </body>

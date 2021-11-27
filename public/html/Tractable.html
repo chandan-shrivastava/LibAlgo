@@ -45,7 +45,45 @@
             <div class="col-sm">
                 <h1>1. n<sup>th</sup> Fibonacci</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    The Fibonacci numbers are the numbers in the following integer sequence - 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ......<br>Method 1: (Using Recursion)<br>
+                    We use a function int fib(int n) that returns Fn. For example, if n = 0, then fib() should return 0. If n = 1, then it should return 1. For n > 1, it should return Fn-1 + Fn-2.
+<pre><code class="language-py">
+def Fibonacci(n):
+# First Fibonacci number is 0
+if n==0:
+    return 0
+# Second Fibonacci number is 1
+elif n==1:
+    return 1
+else:
+    return Fibonacci(n-1)+Fibonacci(n-2)
+</code></pre>
+                </p><br>
+                <p class="lead fw-normal text-dark mb-4">
+                    Method 2: (Using Iteration)<br>
+                    Normal iterative approach which completely removes the overlapping computation in the recursion.
+<pre><code class="language-py">
+def Fibonacci(n):
+# First Fibonacci number is 0
+if n==0:
+    return 0
+f[0]=0
+f[1]=1
+for i in range(2,n):
+    f[i]=f[i-1]+f[i-2]
+return f[n]
+</code></pre>
+                </p><br>
+                <p class="lead fw-normal text-dark mb-4">
+                    Method 3: (Using Direct Formula)<br>
+                    Direct formula for the n<sup>th</sup> Fibonacci number which is Fn = {[(√5 + 1)/2] ^ n} / √5 .
+<pre><code class="language-py">
+import math
+def fibo(n):
+    phi = (1 + math.sqrt(5)) / 2
+    return round(pow(phi, n) / math.sqrt(5))
+</code></pre>
+                </p>
             </div>
         </div>
     </div>
@@ -56,7 +94,30 @@
             <div class="col-sm">
                 <h1>2. Karatsuba Algorithm</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    Karatsuba’s algorithm reduces the multiplication of two n-digit numbers to at most  n<sup>log<sub>2</sub>3</sup>} ≈ n<sup>1.585</sup> single-digit multiplications in general and exactly n<sup>log<sub>2</sub>3</sup> when n is a power of 2. Although the familiar grade school algorithm for multiplying numbers is how we work through multiplication in our day-to-day lives, it’s slower O(n<sup>2</sup>) in comparison. Karatsuba observed that xy can be computed in only three multiplications, at the cost of a few extra additions. Using Divide and Conquer, we can multiply two integers in less time complexity. We divide the given numbers in two halves.
+                </p>
+<pre><code class="language-py">
+def karatsuba(x,y):
+"""Function to multiply 2 numbers in a more efficient manner than the grade school algorithm"""
+if len(str(x)) == 1 or len(str(y)) == 1:
+	return x*y
+else:
+	n = max(len(str(x)),len(str(y)))
+	nby2 = n / 2
+	
+	a = x / 10**(nby2)
+	b = x % 10**(nby2)
+	c = y / 10**(nby2)
+	d = y % 10**(nby2)
+	
+	ac = karatsuba(a,c)
+	bd = karatsuba(b,d)
+	ad_plus_bc = karatsuba(a+b,c+d) - ac - bd
+    
+    	# this little trick, writing n as 2*nby2 takes care of both even and odd n
+	prod = ac * 10**(2*nby2) + (ad_plus_bc * 10**nby2) + bd
+	return prod
+</code></pre>
             </div>
         </div>
     </div>
