@@ -32,9 +32,8 @@
         <div class="row gx-5 align-items-center justify-content-center">
             <div class="col-lg-6 col-xxl-8">
                 <div class="my-6 text-center text-l-start">
-                    <h1 class="display-2 fw-bolder text-dark mb-3">Other Algorithms
+                    <h1 class="display-2 fw-bolder text-dark mb-3"> NP, P, NP-complete and NP-Hard problems
                     </h1>
-                    <p class="lead fw-normal text-dark mb-4">Algorithms Included: Church Turing Hypothesis</p>
                 </div>
             </div>
         </div>
@@ -43,9 +42,26 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>1. Church Turing Hypothesis</h1>
+                <h1>1. NP-Complete</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    P is a set of problems that can be solved by a deterministic Turing machine in Polynomial time. NP-complete problem, any of a class of computational problems for which no efficient solution algorithm has been found. A problem is called NP (nondeterministic polynomial) if its solution can be guessed and verified in polynomial time; nondeterministic means that no particular rule is followed to make the guess. If a problem is NP and all other NP problems are polynomial-time reducible to it, the problem is NP-complete. Thus, finding an efficient algorithm for any NP-complete problem implies that an efficient algorithm can be found for all such problems, since any problem belonging to this class can be recast into any other member of the class. It is not known whether any polynomial-time algorithms will ever be found for NP-complete problems, and determining whether these problems are tractable or intractable. When an NP-complete problem must be solved, one approach is to use a polynomial algorithm to approximate the solution; the answer thus obtained will not necessarily be optimal but will be reasonably close. Some examples of NP-Complete Problems are:</p>
+                    <ul class="lead fw-normal text-dark mb-4">
+                        <li>Determining whether a graph has a Hamiltonian cycle</li>
+                        <li>Determining whether a Boolean formula is satisfiable, etc.</li>
+                    </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h1>2. NP-Hard</h1>
+                <p class="lead fw-normal text-dark mb-4">
+                    A Problem X is NP-Hard if there is an NP-Complete problem Y, such that Y is reducible to X in polynomial time. NP-Hard problems are as hard as NP-Complete problems. NP-Hard Problem need not be in NP class. NP-Hard problems(say X) can be solved if and only if there is a NP-Complete problem(say Y) that can be reducible into X in polynomial time. To solve this problem, it do not have to be in NP. Some examples of NP-Hard Problems are:</p>
+                    <ul class="lead fw-normal text-dark mb-4">
+                        <li>Set Cover</li>
+                        <li>Vertex Cover</li>
+                    </ul>
             </div>
         </div>
     </div>

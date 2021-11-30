@@ -34,8 +34,9 @@
                 <div class="my-6 text-center text-l-start">
                     <h1 class="display-2 fw-bolder text-dark mb-3">Dynamic Programming
                     </h1>
-                    <p class="lead fw-normal text-dark mb-4">Algorithms included: Shortest Path in DAG, Longest Increasing Subsequence, Edit Distance, 
-                        Chain Matrix Multiplication, Knapsack with and without repetition, Shortest Reliable Path, 
+                    <p class="lead fw-normal text-dark mb-4">Algorithms included: Shortest Path in DAG, Longest
+                        Increasing Subsequence, Edit Distance,
+                        Chain Matrix Multiplication, Knapsack, Shortest Reliable Path,
                         Floyd Warshall Algorithm, Independent Set in Trees</p>
                 </div>
             </div>
@@ -47,7 +48,93 @@
             <div class="col-sm">
                 <h1>1. Shortest Path in DAG</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    For a general weighted graph, we can calculate single source shortest distances in O(VE) time using
+                    Bellman–Ford Algorithm. For a graph with no negative weights, we can do better and calculate single
+                    source shortest distances using Dijkstra’s algorithm. We can calculate single source shortest
+                    distances in less time for Directed Acyclic Graphs. The idea is to use Topological Sorting.
+                    Following is complete algorithm for finding shortest distances:</p>
+                <ul class="lead fw-normal text-dark mb-4">
+                    <li>Initialize all distance as infinity and distance of source to 0.</li>
+                    <li>Create a topological order of all vertices. </li>
+                    <li>
+                        <pre class="lead fw-normal text-dark mb-4">
+for each vertex u in topological order
+    for each edge (u, v) with weight w
+        if (distance[u] + w < distance[v])
+            distance[v] = distance[u] + w</pre>
+                    </li>
+                </ul>
+                <pre><code class="language-py">
+class Graph:
+    def __init__(self,vertices):
+ 
+        self.V = vertices # No. of vertices
+ 
+        # dictionary containing adjacency List
+        self.graph = defaultdict(list)
+ 
+    # function to add an edge to graph
+    def addEdge(self,u,v,w):
+        self.graph[u].append((v,w))
+ 
+ 
+    # A recursive function used by shortestPath
+    def topologicalSortUtil(self,v,visited,stack):
+ 
+        # Mark the current node as visited.
+        visited[v] = True
+ 
+        # Recur for all the vertices adjacent to this vertex
+        if v in self.graph.keys():
+            for node,weight in self.graph[v]:
+                if visited[node] == False:
+                    self.topologicalSortUtil(node,visited,stack)
+ 
+        # Push current vertex to stack which stores topological sort
+        stack.append(v)
+ 
+ 
+    ''' The function to find shortest paths from given vertex.
+        It uses recursive topologicalSortUtil() to get topological
+        sorting of given graph.'''
+    def shortestPath(self, s):
+ 
+        # Mark all the vertices as not visited
+        visited = [False]*self.V
+        stack =[]
+ 
+        # Call the recursive helper function to store Topological
+        # Sort starting from source vertice
+        for i in range(self.V):
+            if visited[i] == False:
+                self.topologicalSortUtil(s,visited,stack)
+ 
+        # Initialize distances to all vertices as infinite and
+        # distance to source as 0
+        dist = [float("Inf")] * (self.V)
+        dist[s] = 0
+ 
+        # Process vertices in topological order
+        while stack:
+ 
+            # Get the next vertex from topological order
+            i = stack.pop()
+ 
+            # Update distances of all adjacent vertices
+            for node,weight in self.graph[i]:
+                if dist[node] > dist[i] + weight:
+                    dist[node] = dist[i] + weight
+ 
+        # Print the calculated shortest distances
+        for i in range(self.V):
+            print ("%d" %dist[i]) if dist[i] != float("Inf") else  "Inf"
+</code></pre>
+                <p class="lead fw-normal text-dark mb-4">
+                    Time complexity of topological sorting is O(V+E). After finding topological order, the algorithm
+                    process all vertices and for every vertex, it runs a loop for all adjacent vertices. Total adjacent
+                    vertices in a graph is O(E). So the inner loop runs O(V+E) times. Therefore, overall time complexity
+                    of this algorithm is O(V+E).
+                </p>
             </div>
         </div>
     </div>
@@ -58,7 +145,40 @@
             <div class="col-sm">
                 <h1>2. Longest Increasing Subsequence</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    The Longest Increasing Subsequence (LIS) problem is to find the length of the longest subsequence of
+                    a given sequence such that all elements of the subsequence are sorted in increasing order. We can
+                    see that there are many subproblems in the above recursive solution which are solved again and
+                    again. So this problem has Overlapping Substructure property and recomputation of same subproblems
+                    can be avoided by either using Memoization or Tabulation. Please note that the problem specifically
+                    targets subsequences that need not be contiguous, i.e., subsequences are not required to occupy
+                    consecutive positions within the original sequences.</p>
+                <pre><code class="language-py">
+def lis(arr):
+    n = len(arr)
+ 
+    # Declare the list (array) for LIS and
+    # initialize LIS values for all indexes
+    lis = [1]*n
+ 
+    # Compute optimized LIS values in bottom up manner
+    for i in range(1, n):
+        for j in range(0, i):
+            if arr[i] > arr[j] and lis[i] < lis[j] + 1:
+                lis[i] = lis[j]+1
+ 
+    # Initialize maximum to 0 to get
+    # the maximum of all LIS
+    maximum = 0
+ 
+    # Pick maximum of all LIS values
+    for i in range(n):
+        maximum = max(maximum, lis[i])
+ 
+    return maximum
+</code></pre>
+                <p class="lead fw-normal text-dark mb-4">
+                    Time complexity of the algorithm is O(n<sup>2</sup>) and auxiliary space complexity is O(n).
+                </p>
             </div>
         </div>
     </div>
@@ -68,7 +188,44 @@
             <div class="col-sm">
                 <h1>3. Edit Distance</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    Given two strings str1 and str2 with Insert, Remove and Replace operations(equal cost) that can
+                    performed on str1. Find minimum number of operations required to convert str1 into str2. </p>
+                <pre><code class="language-py">
+def editDistDP(str1, str2, m, n):
+    # Create a table to store results of subproblems
+    dp = [[0 for x in range(n + 1)] for x in range(m + 1)]
+  
+    # Fill d[][] in bottom up manner
+    for i in range(m + 1):
+        for j in range(n + 1):
+  
+            # If first string is empty, only option is to
+            # insert all characters of second string
+            if i == 0:
+                dp[i][j] = j    # Min. operations = j
+  
+            # If second string is empty, only option is to
+            # remove all characters of second string
+            elif j == 0:
+                dp[i][j] = i    # Min. operations = i
+  
+            # If last characters are same, ignore last char
+            # and recur for remaining string
+            elif str1[i-1] == str2[j-1]:
+                dp[i][j] = dp[i-1][j-1]
+  
+            # If last character are different, consider all
+            # possibilities and find minimum
+            else:
+                dp[i][j] = 1 + min(dp[i][j-1],        # Insert
+                                   dp[i-1][j],        # Remove
+                                   dp[i-1][j-1])    # Replace
+  
+    return dp[m][n]
+</code></pre>
+                <p class="lead fw-normal text-dark mb-4">
+                    Time complexity of the algorithm is O(m*n) and auxiliary space complexity is O(m*n).
+                </p>
             </div>
         </div>
     </div>
@@ -78,7 +235,53 @@
             <div class="col-sm">
                 <h1>4. Chain Matrix Multiplication</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    Matrix chain multiplication (or Matrix Chain Ordering Problem, MCOP) is an optimization problem that
+                    to find the most efficient way to multiply a given sequence of matrices. The problem is not actually
+                    to perform the multiplications but merely to decide the sequence of the matrix multiplications
+                    involved. Good explanantion with an example is given <a style="text-decoration: none;color: black;"
+                        href="https://www.javatpoint.com/matrix-chain-multiplication-example">here.</a></p>
+
+                <pre><code class="language-py">
+# Matrix Mi has dimension
+# p[i-1] x p[i] for i = 1..n
+def MatrixChainOrder(p, n):
+     
+    # For simplicity of the program, one
+    # extra row and one extra column are
+    # allocated in dp[][]. 0th row and
+    # 0th column of dp[][] are not used
+    dp = [[0 for i in range(n)]
+             for i in range(n)]
+ 
+    # dp[i, j] = Minimum number of scalar
+    # multiplications needed to compute
+    # the matrix M[i]M[i+1]...M[j] = M[i..j]
+    # where dimension of M[i] is p[i-1] x p[i]
+                 
+    # cost is zero when multiplying one matrix.
+    for i in range(1, n):
+        dp[i][i] = 0
+ 
+    # Simply following above recursive formula.
+    for L in range(1, n - 1):
+        for i in range(n - L):
+            dp[i][i + L] = min(dp[i + 1][i + L] +
+                                p[i - 1] * p[i] * p[i + L],
+                               dp[i][i + L - 1] +
+                                p[i - 1] * p[i + L - 1] * p[i + L])
+     
+    return dp[1][n - 1]
+ 
+# Driver code
+arr = [10, 20, 30, 40, 30]
+size = len(arr)
+print("Minimum number of multiplications is",
+                 MatrixChainOrder(arr, size))
+</code></pre>
+                <p class="lead fw-normal text-dark mb-4">
+                    Time complexity of the algorithm is O(n<sup>3</sup>) and auxiliary space complexity is
+                    O(n<sup>2</sup>).
+                </p>
             </div>
         </div>
     </div>
@@ -86,9 +289,38 @@
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>5. Knapsack with and without repetition</h1>
+                <h1>5. Knapsack</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    Given weights and values of n items, put these items in a knapsack of capacity W to get the maximum
+                    total value in the knapsack. In other words, given two integer arrays val[0..n-1] and wt[0..n-1]
+                    which represent values and weights associated with n items respectively. Also given an integer W
+                    which represents knapsack capacity, find out the maximum value subset of val[] such that sum of the
+                    weights of this subset is smaller than or equal to W. You cannot break an item, either pick the
+                    complete item or don’t pick it. This has a better visualisation of the DP approach: <a
+                        href="https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/"
+                        style="text-decoration: none;color: black;">Knapsack</a></p>
+                <pre><code class="language-py">
+def knapSack(W, wt, val, n):
+    K = [[0 for x in range(W + 1)] for x in range(n + 1)]
+ 
+    # Build table K[][] in bottom up manner
+    for i in range(n + 1):
+        for w in range(W + 1):
+            if i == 0 or w == 0:
+                K[i][w] = 0
+            elif wt[i-1] <= w:
+                K[i][w] = max(val[i-1]
+                          + K[i-1][w-wt[i-1]], 
+                              K[i-1][w])
+            else:
+                K[i][w] = K[i-1][w]
+ 
+    return K[n][W]
+</code></pre>
+                <p class="lead fw-normal text-dark mb-4">
+                    Time complexity of the algorithm is O(n<sup>3</sup>) and auxiliary space complexity is
+                    O(n<sup>2</sup>).
+                </p>
             </div>
         </div>
     </div>
@@ -97,7 +329,59 @@
             <div class="col-sm">
                 <h1>6. Shortest Reliable Path</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    Given a directed and two vertices u and v in it, we have to find shortest path from u to v with
+                    exactly k edges on the path. The idea is to build a 3D table where first dimension is source, second
+                    dimension is destination, third dimension is number of edges from source to destination, and the
+                    value is count of walks. Like other Dynamic Programming problems, we fill the 3D table in bottom-up
+                    manner.</p>
+                <pre><code class="language-py">
+# A Dynamic programming based function
+# to find the shortest path from u to v
+# with exactly k edges.
+def shortestPath(graph, u, v, k):
+    global V, INF
+     
+    # Table to be filled up using DP. The
+    # value sp[i][j][e] will store weight
+    # of the shortest path from i to j
+    # with exactly k edges
+    sp = [[None] * V for i in range(V)]
+    for i in range(V):
+        for j in range(V):
+            sp[i][j] = [None] * (k + 1)
+ 
+    # Loop for number of edges from 0 to k
+    for e in range(k + 1):
+        for i in range(V): # for source
+            for j in range(V): # for destination
+             
+                # initialize value
+                sp[i][j][e] = INF
+ 
+                # from base cases
+                if (e == 0 and i == j):
+                    sp[i][j][e] = 0
+                if (e == 1 and graph[i][j] != INF):
+                    sp[i][j][e] = graph[i][j]
+ 
+                # go to adjacent only when number
+                # of edges is more than 1
+                if (e > 1):
+                    for a in range(V):
+                         
+                        # There should be an edge from
+                        # i to a and a should not be
+                        # same as either i or j
+                        if (graph[i][a] != INF and i != a and
+                             j!= a and sp[a][j][e - 1] != INF):
+                            sp[i][j][e] = min(sp[i][j][e], graph[i][a] +
+                                              sp[a][j][e - 1])
+                         
+    return sp[u][v][k]
+</code> </pre>
+                <p class="lead fw-normal text-dark mb-4">
+                    Time complexity of the algorithm is O(V<sup>3</sup>K).
+                </p>
             </div>
         </div>
     </div>
@@ -106,7 +390,46 @@
             <div class="col-sm">
                 <h1>7. Floyd Warshall Algorithm</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    Floyd-Warshall Algorithm is an algorithm for finding the shortest path between all the pairs of
+                    vertices in a weighted graph. This algorithm works for both the directed and undirected weighted
+                    graphs. But, it does not work for the graphs with negative cycles. This website has nice visual
+                    representation of it: <a href="https://www.programiz.com/dsa/floyd-warshall-algorithm"
+                        style="text-decoration: none; color:black">Floyd Warshall</a>.</p>
+                <pre><code class="language-py">
+# floydWarshall(graph, V):
+# dist[][] will be the output matrix that will finally
+# have the shortest distances between every pair of vertices
+# initializing the solution matrix same as input graph matrix
+# OR we can say that the initial values of shortest distances
+# are based on shortest paths considering no intermediate vertex.
+def floydWarshall(graph, V):
+    dist = list(graph)
+ 
+    # Add all vertices one by one to the set of intermediate
+    # vertices.
+    for k in range(V):
+ 
+        # Pick all vertices as source one by one
+        for i in range(V):
+ 
+            # Pick all vertices as destination for the
+            # above picked source
+            for j in range(V):
+ 
+                # If vertex k is on the shortest path from
+                # i to j, then update the value of dist[i][j]
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+ 
+    # Print the shortest distance matrix
+    for i in range(V):
+        for j in range(V):
+            print(dist[i][j], end = " ")
+            print("\n")
+</code></pre>
+                <p class="lead fw-normal text-dark mb-4">
+                    There are three loops. Each loop has constant complexities. So, the time complexity of the
+                    Floyd-Warshall algorithm is O(n<sup>3</sup>). The space complexity of the Floyd-Warshall algorithm
+                    is O(n<sup>2</sup>). </p>
             </div>
         </div>
     </div>
@@ -115,7 +438,62 @@
             <div class="col-sm">
                 <h1>8. Independent Set in Trees</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet nulla vitae lacus fringilla aliquet. Proin suscipit elementum convallis. Quisque eu tempor ligula. Vivamus ornare diam nec urna sodales, sed facilisis turpis condimentum. Aenean consequat sollicitudin interdum. Phasellus pretium tincidunt est. Proin hendrerit lacus felis, ut lacinia dolor interdum sed. Nullam sit amet accumsan tellus, nec efficitur elit.</p>
+                    Given a Binary Tree, find size of the Largest Independent Set in it. A subset of all tree nodes is
+                    an independent set if there is no edge between any two nodes of the subset. Like other typical
+                    Dynamic Programming(DP) problems, recomputations of same subproblems can be avoided by storing the
+                    solutions to subproblems and solving problems in bottom up manner.</p>
+                <pre><code class="language-py">
+# A binary tree node has data,
+# pointer to left child and a
+# pointer to right child
+class node:
+    def __init__(self, data):
+         
+        self.data = data
+        self.left = self.right = None
+        self.liss = 0
+ 
+# A memoization function returns size
+# of the largest independent set in
+# a given binary tree
+def liss(root):
+     
+    if root == None:
+        return 0
+     
+    if root.liss != 0:
+        return root.liss
+     
+    if (root.left == None and
+        root.right == None):
+        root.liss = 1
+        return root.liss
+ 
+    # Calculate size excluding the
+    # current node
+    liss_excl = (liss(root.left) +
+                 liss(root.right))
+ 
+    # Calculate size including the
+    # current node
+    liss_incl = 1
+    if root.left != None:
+        liss_incl += (liss(root.left.left) +
+                      liss(root.left.right))
+         
+    if root.right != None:
+        liss_incl += (liss(root.right.left) +
+                      liss(root.right.right))
+         
+    # Maximum of two sizes is LISS,
+    # store it for future uses.
+    root.liss = max(liss_excl, liss_incl)
+     
+    return root.liss
+</code></pre>
+                <p class="lead fw-normal text-dark mb-4">
+                    Time complexity of the algorithm is O(n) where n is the number of nodes in given Binary tree.
+                </p>
             </div>
         </div>
     </div>

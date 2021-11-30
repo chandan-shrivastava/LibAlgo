@@ -34,8 +34,8 @@
                 <div class="my-6 text-center text-l-start">
                     <h1 class="display-2 fw-bolder text-dark mb-3">Greedy Algorithms
                     </h1>
-                    <p class="lead fw-normal text-dark mb-4">Algorithms included: Minimum Spanning Tree, Kruskal Algorithm, Disjoint Set Implementation, 
-                        Path Compression, Activity Selection, Huffman coding, Set Cover Problem</p>
+                    <p class="lead fw-normal text-dark mb-4">Algorithms included: Prim's Algorithm, Kruskal Algorithm, 
+                        Path Compression, Huffman coding, Set Cover Problem</p>
                 </div>
             </div>
         </div>
@@ -98,6 +98,9 @@ while (no_edge < V - 1):
     selected[y] = True
     no_edge += 1
 </code></pre>
+<p class="lead fw-normal text-dark mb-4">
+    Time Complexity of Prim's algo is O(V^2). If the input graph is represented using adjacency list, then the time complexity of Prim’s algorithm can be reduced to O(E log V) with the help of binary heap.
+</p>
             </div>
         </div>
     </div>
@@ -166,26 +169,10 @@ class Graph:
                 self.apply_union(parent, rank, x, y)
         for u, v, weight in result:
             print("%d - %d: %d" % (u, v, weight))
-
-
-g = Graph(6)
-g.add_edge(0, 1, 4)
-g.add_edge(0, 2, 4)
-g.add_edge(1, 2, 2)
-g.add_edge(1, 0, 4)
-g.add_edge(2, 0, 4)
-g.add_edge(2, 1, 2)
-g.add_edge(2, 3, 3)
-g.add_edge(2, 5, 2)
-g.add_edge(2, 4, 4)
-g.add_edge(3, 2, 3)
-g.add_edge(3, 4, 3)
-g.add_edge(4, 2, 4)
-g.add_edge(4, 3, 3)
-g.add_edge(5, 2, 2)
-g.add_edge(5, 4, 3)
-g.kruskal_algo()
 </code></pre>
+<p class="lead fw-normal text-dark mb-4">
+    The overall time complexity of Kruskal's Algorithm is O(ElogE) or O(ElogV).
+</p>
             </div>
         </div>
     </div>
@@ -193,7 +180,7 @@ g.kruskal_algo()
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>4. Path Compression</h1>
+                <h1>3. Path Compression</h1>
                 <p class="lead fw-normal text-dark mb-4">
                     Path compression` is a way of flattening the structure of the tree whenever Find is used on it. Since each element visited on the way to a root is part of the same set, all of these visited elements can be reattached directly to the root. The resulting tree is much flatter, speeding up future operations not only on these elements, but also on those referencing them.</p>
 <pre><code class="language-plaintext">
@@ -209,7 +196,7 @@ return x.parent
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>5. Huffman coding</h1>
+                <h1>4. Huffman coding</h1>
                 <p class="lead fw-normal text-dark mb-4">
                     Huffman Coding is a technique of compressing data to reduce its size without losing any of the details. It is generally useful to compress the data in which there are frequently occurring characters. Huffman coding first creates a tree using the frequencies of the character and then generates code for each character. Once the data is encoded, it has to be decoded. Decoding is done using the same tree. Algorithm for Huffman coding is as follows:</p>
                     <ul class="lead fw-normal text-dark mb-4">
@@ -279,6 +266,9 @@ print('----------------------')
 for (char, frequency) in freq:
     print(' %-4r |%12s' % (char, huffmanCode[char]))                 
 </code></pre>
+<p class="lead fw-normal text-dark mb-4">
+    The time complexity of the Huffman algorithm is O(nlogn). Using a heap to store the weight of each tree, each iteration requires O(logn) time to determine the cheapest weight and insert the new weight.
+</p>
             </div>
         </div>
     </div>
@@ -286,9 +276,12 @@ for (char, frequency) in freq:
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>6. Set Cover Problem</h1>
+                <h1>5. Set Cover Problem</h1>
                 <p class="lead fw-normal text-dark mb-4">
                     In the set cover problem we have the input as a set of elements B where sets S<sub>1</sub>,....,S<sub>m</sub> ⊆ B. The ouput that we have to get is a selection of the S<sub>i</sub> whose union is B and the cost should be the number of sets picked. Here, we took an example where we had a set of letters as follows: {arid, dash, drain, heard, lost, nose, shun, slate, snare, thread, lid, roast} and we had to cover a set B which included {a,d,e,h,i,l,n,o,r,s,t,u}. The first approach we discussed was to pick the element in set S<sub>i</sub> with the largest number of uncovered elements and repeat this step until all elements of B are covered. So, First we pick thread which covers {t,h,r,e,a,d,s}. So, We are left with {i,l,n,o,s,u}. Next we picked lost which covers {l,o,s}. So, We are now left with {i,n,u}. Next we pick drain which covers {i,n}. Now we are only left with {u}. So, At last we will pick shun which covers the last remaining letter {u}. So, Now as we have covered all the letters, Is this approach optimum? We thought of another approach of picking the elements where we observed that for {u} we will have to pick shun. So, The uncovered elements are {a,d,e,i,l,o,r,t}. So, We need atleast three more picks since {e} and {i} aren't together and if we pick arid/drain/lead for covering {i} still we require two more picks to cover all elements.</p>
+<p class="lead fw-normal text-dark mb-4">
+    The complexity of Set Cover Problem is m<sup>n</sup> where m is the size of the universe and n is the number of sets in the collection.
+</p>
             </div>
         </div>
     </div>

@@ -36,7 +36,7 @@
                     </h1>
                     <p class="lead fw-normal text-dark mb-4">Algorithms included: Euclid's GCD Algorithm, Euclid's
                         Extended Algorithm, Modular Division,
-                        Public Key Cryptography and RSA, Miller Rabin Randomised Primality Testing</p>
+                        Miller Rabin Randomised Primality Testing</p>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                     GCD of two numbers is the largest number that divides both of them. A simple way to find GCD is to
                     factorize both numbers and multiply common prime factors. The basic Euclidean GCD Algorithm is as
                     follows:</p>
-                <ul>
+                <ul class="lead fw-normal text-dark mb-4">
                     <li>If we subtract a smaller number from a larger (we reduce a larger number), GCD doesn’t change.
                         So if we keep subtracting repeatedly the larger of two, we end up with GCD.</li>
                     <li>Now instead of subtraction, if we divide the smaller number, the algorithm stops when we find
@@ -62,6 +62,8 @@ if a == 0 :
     return b 
 return gcd(b%a, a)
 </code></pre>
+<p class="lead fw-normal text-dark mb-4">
+    Time Complexity of the algorithm is O(Log min(a, b))  </p>
             </div>
         </div>
     </div>
@@ -134,6 +136,9 @@ def modDivide(a,b,m):
     else:
         print("Result of Division is ",(inv*a) % m)
 </code></pre>
+<p class="lead fw-normal text-dark mb-4">
+    Approximate complexity of the above algorithm is O(√n).
+</p>
             </div>
         </div>
     </div>
