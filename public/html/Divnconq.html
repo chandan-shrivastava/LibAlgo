@@ -34,7 +34,8 @@
                 <div class="my-6 text-center text-l-start">
                     <h1 class="display-2 fw-bolder text-dark mb-3">Divide and Conqeur Algorithms
                     </h1>
-                    <p class="lead fw-normal text-dark mb-4">Algorithms included: Master Theorem, Merge Sort, Strassen's Matrix
+                    <p class="lead fw-normal text-dark mb-4">Algorithms included: Master Theorem, Merge Sort, Strassen's
+                        Matrix
                         Multiplication, Median of Medians, Fast Fourier Transform</p>
                 </div>
             </div>
@@ -46,29 +47,36 @@
             <div class="col-sm">
                 <h1>1. Master Theorem</h1>
                 <p class="lead fw-normal text-dark mb-4">
-                    There are mainly three ways for solving recurrences. One of them is Master Method. Master Method is a direct way to get the solution. The master method works only for following type of recurrences or for recurrences that can be transformed to type: <br></p>
-                    <pre><code class="language-plaintext">T(n) = aT(n/b) + f(n) where a >= 1 and b > 1 <br>
+                    There are mainly three ways for solving recurrences. One of them is Master Method. Master Method is
+                    a direct way to get the solution. The master method works only for following type of recurrences or
+                    for recurrences that can be transformed to type: <br></p>
+                <pre><code class="language-plaintext">T(n) = aT(n/b) + f(n) where a >= 1 and b > 1 <br>
 where,<br>
 n = size of input<br>
 a = number of subproblems in the recursion<br>
 n/b = size of each subproblem. All subproblems are assumed to have the same size.<br>
 f(n) = cost of the work done outside the recursive call, which includes the cost of dividing the problem and cost of merging the solutions<br></code></pre>
-<p class="lead fw-normal text-dark mb-4">
-There are following three cases: 
-<ul class="lead fw-normal text-dark mb-4">
-<li>If f(n) = O(n<sup>c</sup>) where c < Log<sub>b</sub>a then T(n) = Θ(n<sup>Log<sup>b</sup>a</sup>) </li>
-<li>If f(n) = Θ(n<sup>c</sup>) where c = Log<sub>b</sub>a then T(n) = Θ(n<sup>c</sup>Log n) </li>
-<li>If f(n) = Ω(n<sup>c</sup>) where c > Log<sub>b</sub>a then T(n) = Θ(f(n))</li>
-</ul>    
-</p>
-<p class="lead fw-normal text-dark mb-4">
-Example:<br>
-<ul class="lead fw-normal text-dark mb-4">
-<li>Merge Sort: T(n) = 2T(n/2) + Θ(n). It falls in case 2 as c is 1 and Log<sub>b</sub>a is also 1. So the solution is Θ(n Logn) </li>
-<li>Binary Search: T(n) = T(n/2) + Θ(1). It also falls in case 2 as c is 0 and Log<sub>b</sub>a is also 0. So the solution is Θ(Logn)</li>
-<li>T(n) = 3T(n/2) + n<sup>2</sup>. Here, a = 3, n/b = n/2, f(n) = n<sup>2</sup>, logb a = log<sub>2</sub>3 ≈ 1.58 < 2, ie. f(n) < n<sup>logb a+ϵ</sup>, where, ϵ is a constant. Case 3 implies here. Thus, T(n) = f(n) = Θ(n<sup>2</sup>). </li>
-</ul>
-</p>
+                <p class="lead fw-normal text-dark mb-4">
+                    There are following three cases:
+                <ul class="lead fw-normal text-dark mb-4">
+                    <li>If f(n) = O(n<sup>c</sup>) where c < Log<sub>b</sub>a then T(n) =
+                            Θ(n<sup>Log<sup>b</sup>a</sup>) </li>
+                    <li>If f(n) = Θ(n<sup>c</sup>) where c = Log<sub>b</sub>a then T(n) = Θ(n<sup>c</sup>Log n) </li>
+                    <li>If f(n) = Ω(n<sup>c</sup>) where c > Log<sub>b</sub>a then T(n) = Θ(f(n))</li>
+                </ul>
+                </p>
+                <p class="lead fw-normal text-dark mb-4">
+                    Example:<br>
+                <ul class="lead fw-normal text-dark mb-4">
+                    <li>Merge Sort: T(n) = 2T(n/2) + Θ(n). It falls in case 2 as c is 1 and Log<sub>b</sub>a is also 1.
+                        So the solution is Θ(n Logn) </li>
+                    <li>Binary Search: T(n) = T(n/2) + Θ(1). It also falls in case 2 as c is 0 and Log<sub>b</sub>a is
+                        also 0. So the solution is Θ(Logn)</li>
+                    <li>T(n) = 3T(n/2) + n<sup>2</sup>. Here, a = 3, n/b = n/2, f(n) = n<sup>2</sup>, logb a =
+                        log<sub>2</sub>3 ≈ 1.58 < 2, ie. f(n) < n<sup>logb a+ϵ</sup>, where, ϵ is a constant. Case 3
+                            implies here. Thus, T(n) = f(n) = Θ(n<sup>2</sup>). </li>
+                </ul>
+                </p>
             </div>
         </div>
     </div>
@@ -131,16 +139,16 @@ def mergeSort(array):
             j += 1
             k += 1
 </code></pre>
-<p class="lead fw-normal text-dark mb-4">
-    Average Case: O(n log n) <br>
-    Worst Case: O(n log n) <br>
-    Best Case: O(n log n) <br>
-    Space Complexity: O(n) <br>
-    Stable: Yes <br>
-    In-place: Yes <br>
-    Auxiliary Space: O(1) <br>
-    Time Complexity: O(n log n) <br>  
-</p>
+                <p class="lead fw-normal text-dark mb-4">
+                    Average Case: O(n log n) <br>
+                    Worst Case: O(n log n) <br>
+                    Best Case: O(n log n) <br>
+                    Space Complexity: O(n) <br>
+                    Stable: Yes <br>
+                    In-place: Yes <br>
+                    Auxiliary Space: O(1) <br>
+                    Time Complexity: O(n log n) <br>
+                </p>
             </div>
         </div>
     </div>
@@ -228,9 +236,9 @@ def strassen(x, y):
     return c
 
 </code></pre>
-<p class="lead fw-normal text-dark mb-4">
-Time complexity of Strassen’s matrix multiplication is O(n^2.807).
-</p>
+                    <p class="lead fw-normal text-dark mb-4">
+                        Time complexity of Strassen’s matrix multiplication is O(n^2.807).
+                    </p>
             </div>
         </div>
     </div>
@@ -306,9 +314,12 @@ Time complexity of Strassen’s matrix multiplication is O(n^2.807).
     else: #pivot = k
         return pivot
 </code></pre>
-<p class="lead fw-normal text-dark mb-4">
-The <a href="https://brilliant.org/wiki/median-finding-algorithm/#complexity-of-the-median-of-medians-algorithm" style="text-decoration: none; color: black;" >master theorem</a> is used to derive its complexity which comes to O(n).
-</p>
+                <p class="lead fw-normal text-dark mb-4">
+                    The <a
+                        href="https://brilliant.org/wiki/median-finding-algorithm/#complexity-of-the-median-of-medians-algorithm"
+                        style="text-decoration: none; color: black;">master theorem</a> is used to derive its complexity
+                    which comes to O(n).
+                </p>
             </div>
         </div>
     </div>
@@ -357,9 +368,29 @@ Recursive_FFT(a){
     return y
 }
 </code></pre>
-<p class="lead fw-normal text-dark mb-4">
-    Complexity of the FFT is O (n log n). If n is in fact a power of 2 , then the complexity is O (n log 2n) , where log 2n is the number of times n can be factored into two integers.
-</p>
+                <p class="lead fw-normal text-dark mb-4">
+                    Complexity of the FFT is O (n log n). If n is in fact a power of 2 , then the complexity is O (n log
+                    2n) , where log 2n is the number of times n can be factored into two integers.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h1>Problems Solved</h1>
+                <ul>
+                    <li>
+                        <a class="link-dark lead" href="https://www.hackerearth.com/practice/algorithms/sorting/merge-sort/practice-problems/algorithm/median-game-june-easy-19-3722be60/">Problem</a>
+                        <span class="text-dark mx-1">&middot;</span>
+                        <a class="link-dark lead" href="../solutions/sol1.py">Solution</a>
+                    </li>
+                    <li>
+                        <a class="link-dark lead" href="https://www.hackerearth.com/practice/algorithms/sorting/merge-sort/practice-problems/algorithm/choose-one-c4672347/">Problem</a>
+                        <span class="text-dark mx-1">&middot;</span>
+                        <a class="link-dark lead" href="../solutions/sol2.cpp">Solution</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
